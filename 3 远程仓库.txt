@@ -1,0 +1,42 @@
+							远程仓库
+1 在github 新建一个库
+	创建SSH KEY:
+		ssh-keyden -t rsa -C " youremail" -->回车 使用默认值即可
+		随后在用户主目录里生成.ssh目录，里面有id_rsa和id_rsa.pub两个文件，即SSH KEY 的密钥对
+	登录github -->ssh-keyden keys页面-->add————粘上.pub的文件内容
+		查看id_rsa.pub内容：
+			先进入.ssh :cd ~/.ssh
+			cat id_rsa.pub
+	关联一个远程库 git remote add origin https://github.com/用户名/本地库名.git
+	关联后，使用命令git push -u origin master 第一次推送master分支的所有内容，
+	此后每次本地提交后 只要有必要就可通过命令git push origin master推送最新修改
+	
+	例如提交一个文件到github：
+		1》登录github-->new respository-->输入远程库的名称（最好跟本地库一样）
+			创建好后会远程库的地址，这个地址用于本地库与远程库的连接时用
+		
+		2》git工具
+			进入要上传远程仓库的文件夹--》$ git init 把这个目录变为git可管理的仓库
+			
+			-->$ git add 文件名或者*（*为全部文件，表示添加该目录下的所有文件到本地库，但是还未提交）
+			
+			-->$ git commit -m "message" (message为你要为该次提交的备注信息) 提交该目录下的所有文件到本地库
+			
+			--->$ remote add origin 远程仓库的地址(远程仓库地址在创建时就会显示远程仓库的地址，ctrl+c),该操作是关联本地库和远程库
+			
+			--->$ git push -u origin master （该步是推送本地库内容到远程库）
+			
+			**第一次推送都要用git push -u origin master推送，
+				此后的每次更新后推送最新版本时就可通过命令git push origin master推送最新修改。
+			
+	
+2 从远程库克隆
+	git clone https://github.com/OrangePeel73/gitskills
+	如果有多个人协作开发，那么每个人各自从远程克隆一份就可以了。
+
+	GitHub给出的地址不止一个，还可以用https://github.com/michaelliao/gitskills.git这样的地址。
+	实际上，Git支持多种协议，默认的git://使用ssh，但也可以使用https等其他协议。
+
+	使用https除了速度慢以外，还有个最大的麻烦是每次推送都必须输入口令，
+	但是在某些只开放http端口的公司内部就无法使用ssh协议而只能用https。
+	

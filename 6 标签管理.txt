@@ -1,0 +1,26 @@
+			标签管理
+1 指向某个commit的指针，也就是指向每次提交的指针，跟某个commit绑在一起，
+	为某个时刻的提交打个标签
+	默认的标签指向最新提交的commit-id	即默认指向HEAD
+	创建的标签只存在本地，不会自动推送到远程，打错的标签可以在本地删除
+	
+2	切换到需要打标签的分支上
+	git tag <name> 创建标签
+	git tag 查看标签（标签不是按时间排序，按字母排序） 
+	git tag -a 标签名 -m “” commit-id  （指定标签信息） 
+		用-a指定标签名 -m指定说明文字
+	git show 标签名（查看标签信息）
+	git tag -s 标签名 -m “” commit-id （PGP签名）
+		通过-s用私钥签名一个标签，签名采用的是PGP签名，必须先安装gnupg
+		若没有找到gpg，或者没有gpg密钥对，就会报错（参考gnupg帮助文档配置key）
+	git show <tagname> 可以看到PGP签名信息
+	
+	
+3 操作标签
+	git tag -d <tagname> 删除本地标签
+	git push origin <tagname> 推送标签到远程
+	git push origin --tags   一次性推送全部未推送到远程的本地标签
+	
+	git tag -d <tagname> 
+	git push origin ：refs/tages/tagname 远程删除标签（先在本地删除标签）
+	查看是否从远程库删除了标签，可以登录github查看

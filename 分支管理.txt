@@ -1,0 +1,119 @@
+				分支管理
+1 创建与合并分支
+	查看分支：git branch 
+	创建分支：git branch <branchname>
+	切换分支：git checkout branchname
+	创建+切换分支：git checkout -b branchname
+	合并某分支到当前分支： git merge braname
+	删除分支：git branch -d branchname
+	
+	/**/详细instruction：
+		A 创建分支并且切换到创建的分支：创建分支并且切换到创建的分支：
+			git checkout -b branchname
+			相当于两个语句：新建分支   git branch  branchname
+							切换当到当前分支 git checkout branchname
+								（*号指向的是当前的分支）
+	
+		B 切换到新建分支 -->对内容进行修改（此时查看可以查看到修改的内容）-->提交git add filename-->git commit -m " "
+		(每次提交都是提交到当前的分支，现在是提交到新的分支)
+	
+		C 新的分支的工作完成后，切换到master：git checkout master 
+		（此时查看文件 发现没有没有被修改 保持原样，因为上面的提交是在新建分支上
+			master的提交点并没有改变）
+	
+		D 把新分支的工作成果合并到master分支上 ：git merge 新分支
+		（git merge命令用于合并指定分支到当前分支）
+		（合并后再查看文件 发现内容与新分支提交的内容是一样的）
+	
+		E 删除新分支 git branch -d 新分支branchname
+	
+		F 查看分支 git branch
+		 （这是只剩下master）
+2 解决冲突
+	（1）发生冲突，使用git status可以查看冲突文件是红色字体显示。打开文件，冲突部分有特定标记:
+	<<<<<<<<<HEAD
+	冲突发生前，没有进行合并时，当前位置代码
+	========
+	合并进来的冲突代码
+	>>>>>>>
+	
+	Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容，让我们选择要保留的内容。
+	用户需要根据具体业务删除或者保留对应的代码，同时将<<<<HEAD===>>>这些标记去掉
+	注：
+		有时>>>>>>>后面会跟一些描述信息，比如分支名称、提交时的注释等等。
+		
+	（2）当我们对master和分支dev进行修改，都提交add和commit后合并分支时 ，就会出冲突
+	因为Git无法执行“快速合并”，只能视图将各自的修改合并，但这种合并也会出现冲突
+	合并后可直接查看文件，这时Git用<<<<<<<，=======，>>>>>>>标记出不同分支的内容，我们修改如下后保存
+		对于简单的合并，手工编辑，然后去掉<<<======>>>>>这些标记，然后add，commit
+
+3 分支管理策略
+	通常，合并分支时，如果可能，Git会用Fast forward模式，但这种模式下，删除分支后，会丢掉分支信息。
+	如果要强制禁用Fast forward模式，Git就会在merge时生成一个新的commit，这样，
+	从分支历史上就可以看出分支信息。
+	
+	合并分支时，加上--no-ff参数就可以用普通模式合并，合并后的历史有分支，
+	能看出来曾经做过合并，而fast forward合并就看不出来曾经做过合并。
+	$ git merge --no-ff -m "merge with no-ff" dev
+		--no-ff参数，表示禁用Fast forward：
+		本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。
+		
+4 bug分支
+	1 修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
+	2 当 手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，
+		再git stash pop，回到工作现场。再用git stash list查看内容，看不到任何stash内容
+		可以多次stash，恢复的时候，先用git stash list查看，然后恢复指定的stash，用命令：
+			$ git stash apply stash@{0}
+			
+		/**/$ git stash list查看工作现场内容
+			恢复工作现场有两个办法：
+				a 、git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
+				b、用git stash pop，恢复的同时把stash内容也删了
+5 feature分支：一般用于添加新功能，feature分支和bug分支是类似的，合并，然后删除。
+	每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后删除feature分支
+	如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+	
+	a 新建：$ git checkout -b feature-vulcan
+	b 开发完毕后 ：$ git add vulcan.py
+		$ git commit -m "add feature vulcan"
+	c 切回dev，准备合并：
+	d 在此时因某些原因必须销毁：$ git branch -d feature-vulcan
+					强项销毁：git branch -D <name>
+
+
+6 多人协作
+	1 远程仓库的默认名称为origin
+	2 查看远程仓库的信息：git remote
+	3 查看更详细的信息：git remote -v （显示可以抓取和推送的origin的地址
+										没有推送权限就看不到push的地址）
+	4 推送分支：git push origin master
+	5 推送其他分支：git push origin dev（推送dev）
+	6 不是一定要把本地分支往远程推送：
+		master分支：主分支，时刻与远程同步
+		dev分支：开发分支，团队所有成员都需要在上面工作，也需要与远程同步
+		bug分支：只用于在本地修复bug，没必要推送到远程
+		feature分支:是否推到远程，取决于你是否和你的小伙伴合作在上面开发
+		总之，在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定
+		
+	7 抓取分支
+	    第一步：克隆远程库：git clone 地址
+				模拟一个你的小伙伴，可以在另一台电脑（注意要把SSH Key添加到GitHub）
+				或者同一台电脑的另一个目录下克隆：$ git clone git@github.com:michaelliao/learngit.git
+				当他人从远程库clone时 默认情况下只能看到本地的maser分支（git branch 查看分支）
+		第二、git checkout -b dev origin/dev
+				小伙伴要在dev分支开发，必须创建origin的dev分支到本地
+		第三、git commit -m “ ”
+			  git push orgin dev
+			  可以在dev上继续修改，时不时把dev分支push到远程
+		小伙伴已经向origin/dev分支推送了他的提交，而碰巧你也对同样的文件作了修改，并试图推送：
+		git add filename
+		git commit -m “”
+		git push origin dev
+		但是推送失败，因为小伙伴的最新提交和你试图推送的提交有冲突，
+		先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送：
+		git pull（失败，没有指定本地dev分支和远程origin/dev分支的链接，）
+		git branch （设置dev和origin/dev的链接）
+		再pull：git pull（pull成功，但是合并有冲突，需要手动解决，与分支管理的解决冲突的完全一样，解决后，提交，再push）
+		git commit -master “”
+		git push origin dev
+		

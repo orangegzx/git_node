@@ -1,0 +1,47 @@
+git
+1、安装完成后，在命令行输入
+	git config --global user.name "your name"
+	git config --global user.email "your email"
+	
+	*git config 的--global参数，用了这个参数表示
+	你这台机器上所有的Git仓库都会使用这个配置，
+	当然也可以对某个仓库指定不同的用户名和Email地址。
+
+2、创建版本库
+	（1）选择一个合适的地方创建一个空目录：
+		mkdir filename
+		cd filename
+		pwd  显示当前目录
+	（2）初始化一个git仓库
+		通过git init命令把这个目录变成git可以管理的的仓库
+			git init（初始化上面建立的filename文件）
+			建立好仓库后 会告诉你这是一个空的仓库，
+			还多了一个.git目录，这个是git用来跟踪管理版本库的。
+			如果你没有看到.git目录，那是因为这个目录默认是隐藏的，
+			用ls -ah命令就可以看见。
+			
+		编写文件一定要放在你创建后初始化为git可管理的仓库的filename
+		下，子目录中也可以
+3、添加文件到Git仓库，分两步：
+
+    第一步，使用命令git add <filename>，注意，可反复多次使用，添加多个文件；
+    第二步，使用命令git commit，完成。
+	eg：git add file1.txt
+		git add file2.txt file3.txt
+		git commit -m “add 3 files”
+		-m后面输入的是本次提交的说明，可以输入任意内容
+	*
+	*当vi编辑一个文本内容再提交时出现
+	$ git add world.txt
+		warning: LF will be replaced by CRLF in world.txt.
+		The file will have its original line endings in your working directory.
+		这是行为结束符问题
+		这时需要 git config --global core.autocrlf false
+		就可以add文件了
+
+
+4、git status查看结果，掌握当前仓库的状态，文件是否被修改
+	git diff filename 查看修改内容以及difference
+	
+5、版本回退，即历史记录
+	git log 显示最近到最远的提交的日志

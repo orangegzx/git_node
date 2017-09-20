@@ -1,0 +1,38 @@
+﻿1、管理修改
+	每次修改，如果不add到暂存区，commit的话是不会提交的
+2、撤销修改
+	（1）git checkout --filename 可丢弃工作区的修改，
+		把filename文件在工作区的修改全部撤销，分两种情况：
+		1）filename自修改后还没有被添加到暂存区，
+			现在撤销修改就回到和版本库一模一样的状态
+		2）filename已经添加到暂存区后做了修改，
+			现在撤销修改就会回到添加到暂存区后的状态
+			总的来说就是让这个文件回到最近一次的git commit或git add时的状态
+	（2）在git add后commit之前发现了错误：用git
+		用git status查看，修改只是添加到暂存区，还没有提交
+		这时用git reset HEAD filename可以把暂存区的修改撤销掉（UNstage）
+		重新放回工作区
+	（3）小结：
+		场景1：当你改乱了工作区某个文件的内容，
+			   想直接丢弃工作区的修改时，
+			   用命令git checkout -- filename。
+
+		场景2：当你不但改乱了工作区某个文件的内容，
+			   还添加到了暂存区时，想丢弃修改，分两步，
+			   第一步用命令git reset HEAD filename，就回到了场景1改后的状态，
+			   第二步按场景1操作，回到工作区未被修改的状态。
+
+		场景3：已经提交了不合适的修改到版本库时，
+			   想要撤销本次提交，参考 版本回退 的内容，
+			   即git log (git log 查看提交记录；
+			   git reset --hard head~n或者--hard commit_id 回退
+			   不知道命令可用git reflog （记录每次命令） 查询)
+			   不过前提是没有推送到远程库。
+3、删除文件
+	（1）在工作删除文件 rm filename。
+	（2）在版本库中删除文件 git rm filename
+	（3）当删除了工作区的文件，版本库中还存在时：
+		1）可以在版本库中删除该文件git rm filename 
+		2）如果是删错了，版本库中仍然存在该文件，
+		   可git checkout --filename恢复未被修改之前的状态
+		
