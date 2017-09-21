@@ -29,6 +29,7 @@
 	
 		F 查看分支 git branch
 		 （这是只剩下master）
+		 
 2 解决冲突
 	（1）发生冲突，使用git status可以查看冲突文件是红色字体显示。打开文件，冲突部分有特定标记:
 	<<<<<<<<<HEAD
@@ -69,6 +70,7 @@
 			恢复工作现场有两个办法：
 				a 、git stash apply恢复，但是恢复后，stash内容并不删除，你需要用git stash drop来删除；
 				b、用git stash pop，恢复的同时把stash内容也删了
+
 5 feature分支：一般用于添加新功能，feature分支和bug分支是类似的，合并，然后删除。
 	每添加一个新功能，最好新建一个feature分支，在上面开发，完成后，合并，最后删除feature分支
 	如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
@@ -95,13 +97,15 @@
 		feature分支:是否推到远程，取决于你是否和你的小伙伴合作在上面开发
 		总之，在Git中，分支完全可以在本地自己藏着玩，是否推送，视你的心情而定
 		
-	7 抓取分支
+7 抓取分支
 	    第一步：克隆远程库：git clone 地址
 				模拟一个你的小伙伴，可以在另一台电脑（注意要把SSH Key添加到GitHub）
 				或者同一台电脑的另一个目录下克隆：$ git clone git@github.com:michaelliao/learngit.git
 				当他人从远程库clone时 默认情况下只能看到本地的maser分支（git branch 查看分支）
+		
 		第二、git checkout -b dev origin/dev
 				小伙伴要在dev分支开发，必须创建origin的dev分支到本地
+				
 		第三、git commit -m “ ”
 			  git push orgin dev
 			  可以在dev上继续修改，时不时把dev分支push到远程

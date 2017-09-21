@@ -1,0 +1,50 @@
+﻿		使用码云
+
+1注册码云 ————>添加key 即SSH公钥——>创建项目（项目名称最好跟本地库名称一致）
+2 本地库关联码云库：
+	git remote add origin git.oschina/orangepeel/gzx.git（gzx为项目名称，orangepeel为码云用户账户名）
+	之后可以正常git push 和gitpull了
+	
+3 如果使用命令git remote add报错，fatal: remote origin already exists.
+	 说明本地库一斤关联了一个名叫origin的远程库
+	 git remote -v查看远程库信息
+	 git remote rm origin 删除已有的github远程库
+	 git remote add origin git.oschina/orangepeel/gzx.git 再关联码云库
+	再查看远程库信息：git remote -v
+
+4 同时关联github库和码云库
+	1 先删除已关联的名为origin的远程库
+		git remote rm origin
+
+	2 先关联github的远程库
+		git remote add github https://github.com/OrangePeel73/gzx.git
+		*远程裤名为github 不叫origin
+
+	3 关联码云的远程库
+		git remote add gitee git.oschina/orangepeel/gzx.git
+			远程库名为gitee 不叫origin
+
+	4 查看远程库信息
+		git remote -v
+		可以查看两个远程库的信息
+
+	5 推送到github
+		git push github master
+
+	6 推送到码云
+		git push gitee master
+	*之前的origin远程库推送是git push origin master
+	
+5、在工作区每次修改后都要提交到版本库，才可以推送到版本库
+	1》 git add *
+		git commit -m “”
+		
+	2》推送到码云
+		git push gitee master
+		
+		*从码云抓取：git pull gitee master
+		
+	3》推送到github
+		git push github master
+		
+		*从github抓取：git pull github master

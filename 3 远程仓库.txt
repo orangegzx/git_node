@@ -1,12 +1,16 @@
 							远程仓库
+
+
 1 在github 新建一个库
 	创建SSH KEY:
 		ssh-keyden -t rsa -C " youremail" -->回车 使用默认值即可
 		随后在用户主目录里生成.ssh目录，里面有id_rsa和id_rsa.pub两个文件，即SSH KEY 的密钥对
+	
 	登录github -->ssh-keyden keys页面-->add————粘上.pub的文件内容
 		查看id_rsa.pub内容：
 			先进入.ssh :cd ~/.ssh
 			cat id_rsa.pub
+			
 	关联一个远程库 git remote add origin https://github.com/用户名/本地库名.git
 	关联后，使用命令git push -u origin master 第一次推送master分支的所有内容，
 	此后每次本地提交后 只要有必要就可通过命令git push origin master推送最新修改

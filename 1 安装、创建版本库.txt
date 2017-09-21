@@ -8,10 +8,16 @@ git
 	当然也可以对某个仓库指定不同的用户名和Email地址。
 
 2、创建版本库
+
+		1》mkdir filename
+		2》cd filename
+		3》git init //初始化版本库
+		
 	（1）选择一个合适的地方创建一个空目录：
 		mkdir filename
 		cd filename
 		pwd  显示当前目录
+
 	（2）初始化一个git仓库
 		通过git init命令把这个目录变成git可以管理的的仓库
 			git init（初始化上面建立的filename文件）
@@ -22,9 +28,17 @@ git
 			
 		编写文件一定要放在你创建后初始化为git可管理的仓库的filename
 		下，子目录中也可以
-3、添加文件到Git仓库，分两步：
+	
+	
+		
 
+3、添加文件到Git仓库，分两步：
+	1》git add */fliename
+	2》git commit -m "meassage"
+
+	
     第一步，使用命令git add <filename>，注意，可反复多次使用，添加多个文件；
+
     第二步，使用命令git commit，完成。
 	eg：git add file1.txt
 		git add file2.txt file3.txt
@@ -40,8 +54,11 @@ git
 		就可以add文件了
 
 
-4、git status查看结果，掌握当前仓库的状态，文件是否被修改
-	git diff filename 查看修改内容以及difference
+4、git status
+	查看结果，掌握当前仓库的状态，文件是否被修改
+
+5、git diff filename 查看修改内容以及difference
 	
-5、版本回退，即历史记录
+6、版本回退，即历史记录
 	git log 显示最近到最远的提交的日志
+	git reflog
