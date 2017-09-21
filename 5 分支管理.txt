@@ -117,6 +117,7 @@
 		先用git pull把最新的提交从origin/dev抓下来，然后，在本地合并，解决冲突，再推送：
 		git pull（失败，没有指定本地dev分支和远程origin/dev分支的链接，）
 		git branch （设置dev和origin/dev的链接）
+			git branch --set-upstream branch-name origin/branch-name
 		再pull：git pull（pull成功，但是合并有冲突，需要手动解决，与分支管理的解决冲突的完全一样，解决后，提交，再push）
 		git commit -master “”
 		git push origin dev
